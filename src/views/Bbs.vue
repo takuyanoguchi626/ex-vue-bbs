@@ -12,12 +12,22 @@
       <button type="button" @click="addArticle">記事投稿</button>
       <hr />
     </div>
+    <!-- ここから記事一覧 -->
     <div v-for="article of currentArticleList" :key="article.id">
       投稿者名：{{ article.name }} <br />
       投稿内容：{{ article.content }}
       <div v-for="comment of article.commentList" :key="comment.id">
         コメント者名：{{ comment.name }} <br />
         コメント内容：{{ comment.content }}
+      </div>
+      <!-- ここからコメント投稿 -->
+      <div>
+        名前：<br />
+        <input type="text" v-model="commentName" /> <br />
+        コメント：<br />
+        <textarea cols="30" rows="10" v-model="commentContent"></textarea><br />
+        <button type="button" @click="addComment(article)">コメント投稿</button>
+        <hr />
       </div>
     </div>
     <!-- end div -->
@@ -26,6 +36,7 @@
 
 <script lang="ts">
 import { Article } from "@/types/article";
+import { Comment } from "@/types/comment";
 import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class XXXComponent extends Vue {
@@ -35,6 +46,8 @@ export default class XXXComponent extends Vue {
   private articleContent = "";
   //記事一覧
   private currentArticleList = new Array<Article>();
+  private commentName = "";
+  private commentContent = "";
 
   /**
    *Vuexストアから記事一覧を取得し、currentArticleListに格納.
@@ -49,11 +62,28 @@ export default class XXXComponent extends Vue {
    *
    */
   addArticle(): void {
-    let articlesLength = this.$store.getters.getArticleLength;
-    this.$store.commit(
-      "addArticle",
-      new Article(articlesLength + 1, this.articleName, this.articleContent, [])
-    );
+    let articles = this.$store.getters.getArticles;
+    let newId = 0;
+    if (this.currentArticleList.length >= 1) {
+      newId = articles[0].id + 1;
+    }
+    this.$store.commit("addArticle", {
+      article: new Article(newId, this.articleName, this.articleContent, []),
+    });
+    this.articleName = "";
+    this.articleContent = "";
+  }
+
+  addComment(article: Article): void {
+    this.$store.commit("addComment", {
+      article: article,
+      newArticle: new Comment(
+        -1,
+        this.commentName,
+        this.commentContent,
+        article.id
+      ),
+    });
   }
 }
 </script>
