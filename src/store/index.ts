@@ -23,11 +23,37 @@ export default new Vuex.Store({
 
   actions: {}, //end actions
 
-  mutations: {}, //end mutations
+  mutations: {
+    /**
+     * ステートの0番目にpayloadで受け取った記事を挿入する.
+     *
+     * @param state ステート
+     * @param payload 投稿する記事
+     */
+    addArticle(state, payload) {
+      state.articles.unshift(payload);
+    },
+  }, //end mutations
 
   getters: {
-    getArticle(state): Array<Article> {
+    /**
+     * ステートからArticleを取得.
+     *
+     * @param state ステート
+     * @returns - 記事一覧
+     */
+    getArticles(state): Array<Article> {
       return state.articles;
+    },
+
+    /**
+     * ステートの記事一覧の記事数を取得する.
+     *
+     * @param state ステート
+     * @returns - 記事数
+     */
+    getArticlesLength(state) {
+      return state.articles.length;
     },
   }, //end getters
 

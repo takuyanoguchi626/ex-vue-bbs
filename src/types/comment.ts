@@ -1,3 +1,7 @@
+/**
+ * コメントクラス.
+ *
+ */
 export class Comment {
   constructor(
     private _id: number,
