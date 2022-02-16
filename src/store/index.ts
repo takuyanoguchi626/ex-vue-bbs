@@ -34,11 +34,17 @@ export default new Vuex.Store({
       state.articles.unshift(payload.article);
     },
 
+    /**
+     * 記事のコメントリストにpayloadで受け取ったコメントを挿入する.
+     *
+     * @param state
+     * @param payload
+     */
     addComment(state, payload) {
       const article = state.articles.filter(
         (article) => article.id === payload.article.id
       )[0];
-      article.commentList.push(payload.comment);
+      article.commentList.push(payload.newComment);
     },
   }, //end mutations
 

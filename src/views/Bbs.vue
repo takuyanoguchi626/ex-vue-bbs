@@ -16,6 +16,7 @@
     <div v-for="article of currentArticleList" :key="article.id">
       投稿者名：{{ article.name }} <br />
       投稿内容：{{ article.content }}
+      <!-- ここからコメント一覧 -->
       <div v-for="comment of article.commentList" :key="comment.id">
         コメント者名：{{ comment.name }} <br />
         コメント内容：{{ comment.content }}
@@ -46,7 +47,9 @@ export default class XXXComponent extends Vue {
   private articleContent = "";
   //記事一覧
   private currentArticleList = new Array<Article>();
+  //コメント者名
   private commentName = "";
+  //コメント内容
   private commentContent = "";
 
   /**
@@ -74,10 +77,14 @@ export default class XXXComponent extends Vue {
     this.articleContent = "";
   }
 
+  /**
+   * 新しいコメントを投稿する.
+   *
+   */
   addComment(article: Article): void {
     this.$store.commit("addComment", {
       article: article,
-      newArticle: new Comment(
+      newComment: new Comment(
         -1,
         this.commentName,
         this.commentContent,
