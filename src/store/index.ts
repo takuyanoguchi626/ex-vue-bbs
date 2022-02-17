@@ -37,8 +37,8 @@ export default new Vuex.Store({
     /**
      * 記事のコメントリストにpayloadで受け取ったコメントを挿入する.
      *
-     * @param state
-     * @param payload
+     * @param - state
+     * @param - payload
      */
     addComment(state, payload) {
       const article = state.articles.filter(
@@ -52,7 +52,7 @@ export default new Vuex.Store({
     /**
      * ステートからArticleを取得.
      *
-     * @param state ステート
+     * @param state - ステート
      * @returns - 記事一覧
      */
     getArticles(state): Array<Article> {

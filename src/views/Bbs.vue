@@ -91,6 +91,8 @@ export default class XXXComponent extends Vue {
         article.id
       ),
     });
+    this.commentName = "";
+    this.commentContent = "";
   }
 }
 </script>
