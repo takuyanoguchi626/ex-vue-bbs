@@ -37,17 +37,18 @@ export default new Vuex.Store({
     /**
      * 記事のコメントリストにpayloadで受け取ったコメントを挿入する.
      *
-     * @param - state
-     * @param - Bbs.vueから受け取った連想配列
+     * @param state - ステート
+     * @param payload - Bbs.vueから受け取ったコメント
      */
     addComment(state, payload) {
       const article = state.articles.filter(
-        (article) => article.id === payload.article.id
+        (article) => article.id === payload.newComment.articleId
       )[0];
       article.commentList.push(payload.newComment);
     },
 
     /**
+     *記事を削除する.
      *
      * @param state - ステート
      * @param payload - Bbs.vueから受け取った連想配列
