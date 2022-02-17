@@ -38,13 +38,22 @@ export default new Vuex.Store({
      * 記事のコメントリストにpayloadで受け取ったコメントを挿入する.
      *
      * @param - state
-     * @param - payload
+     * @param - Bbs.vueから受け取った連想配列
      */
     addComment(state, payload) {
       const article = state.articles.filter(
         (article) => article.id === payload.article.id
       )[0];
       article.commentList.push(payload.newComment);
+    },
+
+    /**
+     *
+     * @param state - ステート
+     * @param payload - Bbs.vueから受け取った連想配列
+     */
+    deleteArticle(state, payload) {
+      state.articles.splice(payload.articleIndex, 1);
     },
   }, //end mutations
 

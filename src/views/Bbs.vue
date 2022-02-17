@@ -13,9 +13,10 @@
       <hr />
     </div>
     <!-- ここから記事一覧 -->
-    <div v-for="article of currentArticleList" :key="article.id">
+    <div v-for="(article, index) of currentArticleList" :key="article.id">
       投稿者名：{{ article.name }} <br />
-      投稿内容：{{ article.content }}
+      投稿内容：{{ article.content }} <br />
+      <button type="button" @click="deleteArticle(index)">記事削除</button>
       <!-- ここからコメント一覧 -->
       <div v-for="comment of article.commentList" :key="comment.id">
         コメント者名：{{ comment.name }} <br />
@@ -80,6 +81,7 @@ export default class XXXComponent extends Vue {
   /**
    * 新しいコメントを投稿する.
    *
+   * @params - 記事
    */
   addComment(article: Article): void {
     this.$store.commit("addComment", {
@@ -93,6 +95,17 @@ export default class XXXComponent extends Vue {
     });
     this.commentName = "";
     this.commentContent = "";
+  }
+
+  /**
+   * 記事を削除する.
+   *
+   *@params - インデックス番号
+   */
+  deleteArticle(index: number): void {
+    this.$store.commit("deleteArticle", {
+      articleIndex: index,
+    });
   }
 }
 </script>
