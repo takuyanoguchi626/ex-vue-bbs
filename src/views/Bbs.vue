@@ -25,9 +25,14 @@
       <!-- ここからコメント投稿 -->
       <div>
         名前：<br />
-        <input type="text" v-model="commentName" /> <br />
+        <input type="text" v-model="commentName[article.id]" /> <br />
         コメント：<br />
-        <textarea cols="30" rows="10" v-model="commentContent"></textarea><br />
+        <textarea
+          cols="30"
+          rows="10"
+          v-model="commentContent[article.id]"
+        ></textarea
+        ><br />
         <button type="button" @click="addComment(article)">コメント投稿</button>
         <hr />
       </div>
@@ -49,9 +54,9 @@ export default class XXXComponent extends Vue {
   //記事一覧
   private currentArticleList = new Array<Article>();
   //コメント者名
-  private commentName = "";
+  private commentName = Array<string>();
   //コメント内容
-  private commentContent = "";
+  private commentContent = Array<string>();
 
   /**
    *Vuexストアから記事一覧を取得し、currentArticleListに格納.
@@ -88,13 +93,13 @@ export default class XXXComponent extends Vue {
       article: article,
       newComment: new Comment(
         -1,
-        this.commentName,
-        this.commentContent,
+        this.commentName[article.id],
+        this.commentContent[article.id],
         article.id
       ),
     });
-    this.commentName = "";
-    this.commentContent = "";
+    this.commentName[article.id] = "";
+    this.commentContent[article.id] = "";
   }
 
   /**
